@@ -78,7 +78,27 @@ toc: true
 
   - initialize record with calling common.initValue() method 
   
-  - concenquenced filling of the required fields with mandatory executing commong.validateField() and common.modifiedField() method. Consequence of field filling should be described in Functional Specification.
+  - concenquenced filling of the required fields with mandatory executing common.validateField() and common.modifiedField() method. Consequence of field filling should be described in Functional Specification.
+  Эти методы должны содержать в себе строго ту логику, которая должна отрабатывать на форме при пользовательских действиях для повышения пользовательского опыта, и ни в коем случае не должны содержать в себе бизнес-логику, влияующую на результат.
+  Мы не должны из каждого кода типа 
+  journalTrans.CurrencyCode      = _journalTable.CurrencyCode;
+    journalTrans.ExchRate          = _journalTable.ExchRate;
+    journalTrans.ExchRateSecond    = _journalTable.ExchrateSecondary;
+    journalTrans.Triangulation     = _journalTable.EUROTriangulation;
+    
+   делать код
+   journalTrans.CurrencyCode      = _journalTable.CurrencyCode;
+   journalTrans.validateField(fieldnum(LedgerJuornalTrans, CurrencyCode));
+   journalTrans.modifiedField(fieldnum(LedgerJuornalTrans, CurrencyCode));
+   journalTrans.ExchRate          = _journalTable.ExchRate;
+   journalTrans.validateField(fieldnum(LedgerJuornalTrans, ExchRate));
+   journalTrans.modifiedField(fieldnum(LedgerJuornalTrans, ExchRate));
+   journalTrans.ExchRateSecond    = _journalTable.ExchrateSecondary;
+   journalTrans.validateField(fieldnum(LedgerJuornalTrans, ExchRateSecond));
+   journalTrans.modifiedField(fieldnum(LedgerJuornalTrans, ExchRateSecond));
+   journalTrans.Triangulation     = _journalTable.EUROTriangulation;
+   journalTrans.validateField(fieldnum(LedgerJuornalTrans, Triangulation));
+   journalTrans.modifiedField(fieldnum(LedgerJuornalTrans, Triangulation));
   
   - executing of common.validateWrite() and common.write() methods 
   
