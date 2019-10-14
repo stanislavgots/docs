@@ -109,6 +109,8 @@ Sometimes Developers implement solutions that should be reworked from scratch af
 - Storing list of values (separated with comma, etc.) in a single field/variable.
 
 - Using any multi-value parameters (like _container_, _List_, _Set_, etc.) in RunBase-framework classes.
+Тут надо конкретизировать, что конкретно не так. Запакованные в контейнер данные передать - ничего плохого не вижу.
+Меня также сразу на "подумать" наталкивает желание поиспользовать временные таблицы, лукапы с множественным выбором(!!!), вызовы экзотических методов типа tabchanged, mouseOver и т.п. 
 
 - Addressing to financial dimension by name
 
@@ -121,6 +123,7 @@ Sometimes Developers implement solutions that should be reworked from scratch af
 ## Financial dimensions
 
 - No 'Custom dimensions' allowed for implementation project.<br/>Each financial dimension should be implemented with own table (called _backing entity_) and separate setup form.
+Жестишь. Зачем прибегать к разработке, если можно обойтись без нее?
 
 - Do not address to financial dimension (dimension attribute) by name (with hardcoding its name).
   
@@ -208,6 +211,7 @@ Sometimes Developers implement solutions that should be reworked from scratch af
   ```
   
 - It is not necessary to have additional variable to ogranize parameter or master setup record _caching_. Trust to table-wise or record-wise caching on server side (CacheLookup=Found,EntireTable etc.).
+В общем случае да, но на 1 млн вызовов такого метода find, который займет хотя бы 1 мс, потратится в общей сложности 15 минут. Я бы подумал. 
 
   Example:
   
@@ -233,6 +237,7 @@ Sometimes Developers implement solutions that should be reworked from scratch af
   ```
   
 - Avoid to use custom enums in conditions (_if_, _switch_, etc.) to have algorithm branching. Use business-centric terms instead. Compare two following example.
+Понятно, что ты хочешь, но пример плохой. По примеру тебе нужно на каждый enum создавать еще и справочник. Это не так. Я бы перефразировал так, что enum нужно использовать тогда, когда эти действительно неизменяемый список (перечисление), а элементы перечисления не предполагаю никаких дополнительных атрибутов.В противном случае поле MainProductType_PRJ должно быть полем MainProductTypeId_PRJ и ссылаться relation'ами на справочник с соответствующими настройками. В общем, надо подумать над тем, как определять, что делать - Enum или справочник
   
   Example (incorrect with hard-coded business logic):
   
